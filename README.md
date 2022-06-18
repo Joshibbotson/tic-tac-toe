@@ -5,4 +5,6 @@ Tic-Tac-Toe made using html, css and vanilla javascript
 
 pseudo code / planning
 
-class => boardGame
+Gameboard {
+    gameArr: [] <- This will hold the state of the board>
+}
