@@ -1,0 +1,39 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+:root {
+
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    outline: 1px solid white;
+    outline-offset: -1px;
+
+}
+
+.grid {
+    width: 10rem;
+    height: 10rem;
+    border: 1px solid black;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    font-size: 10em;
+}
+
+
