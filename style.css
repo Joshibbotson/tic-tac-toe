@@ -75,3 +75,11 @@ button:hover {
     filter: brightness(120%);
 }
 
+@media (max-width: 836px) {
+    body {
+        transform: scale(0.7);
+    }
+    nav {
+        margin-top:-8rem;
+    }
+  }
