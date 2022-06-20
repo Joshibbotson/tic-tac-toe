@@ -1,4 +1,4 @@
-
+const outcomeDisplay = document.getElementById('outcomeDisplay')
 
 const createPlayer = (name, symbol) => {
     const assignPositionToBoard = (i) => {
@@ -51,11 +51,6 @@ const player2 = createPlayer('player2', 'o')
 const player = createPlayer('Josh', 'x')
 let endOfGame = false;
 const Game = {
-    // logic here should have a function that take player/player2 as a parameter based off of 
-    // who had a go last, and then for do parameter.assignPositionToBoard(position) which will
-    // need something to prevent overlap of smybols and there should also be something that
-    // calls the checkboard function within GameBoard each time
-    // checkboard function should end the game and pronounce a winner.
     currentTurnTaker: player,
     state: (currentPlayer) => {
         switch(endOfGame){
@@ -82,58 +77,66 @@ const GameBoard = {
        [null, null, null]],
     
     checkBoard: function (board, symbol) {
-    if (board[0] === [symbol, symbol, symbol]){
-        console.log("winner!")
-        
-    }
-    
     if (board[0][0] === symbol &&
         board[1][1] === symbol &&
         board[2][2] === symbol){
-        console.log("winner!")
         endOfGame = true
-
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
 
     if (board[0][2] === symbol &&
         board[1][1] === symbol &&
         board[2][0] === symbol){
-      console.log("winner!")
-
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
     
     if (board[0][0] === symbol &&
         board[1][0] === symbol &&
         board[2][0] === symbol){
-      console.log("winner!")
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
+    }
 
+    if (board[0][1] === symbol &&
+        board[1][1] === symbol &&
+        board[2][1] === symbol){
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
     
     if (board[0][2] === symbol &&
         board[1][2] === symbol &&
         board[2][2] === symbol){
-      console.log("winner!")
-
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
     
     if (board[2][0] === symbol &&
         board[2][1] === symbol &&
         board[2][2] === symbol){
-      console.log("winner!")
-
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
     if (board[1][0] === symbol &&
         board[1][1] === symbol &&
         board[1][2] === symbol){
-      console.log("winner!")
-
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
-    else {
-        console.log("uh oh")
+
+    else if (board[0][0] === symbol &&
+        board[0][1] === symbol &&
+        board[0][2] === symbol){
+        endOfGame = true
+        outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
     },
 
     resetBoard: () => {
+        endOfGame = false;
+        outcomeDisplay.innerHTML = ``
+
         GameBoard.board = [
         [null, null, null],
         [null, null, null],
