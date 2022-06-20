@@ -1,3 +1,5 @@
+
+
 const createPlayer = (name, symbol) => {
     const assignPositionToBoard = (i) => {
         let row1 = GameBoard.board[0]
@@ -47,7 +49,7 @@ const createPlayer = (name, symbol) => {
 }
 const player2 = createPlayer('player2', 'o')
 const player = createPlayer('Josh', 'x')
-
+let endOfGame = false;
 const Game = {
     // logic here should have a function that take player/player2 as a parameter based off of 
     // who had a go last, and then for do parameter.assignPositionToBoard(position) which will
@@ -56,14 +58,20 @@ const Game = {
     // checkboard function should end the game and pronounce a winner.
     currentTurnTaker: player,
     state: (currentPlayer) => {
-        if (currentPlayer === player) {
-            player.assignPositionToBoard(position)
-            Game.currentTurnTaker = player2
+        switch(endOfGame){
+            case false:
+            if (currentPlayer === player) {
+                player.assignPositionToBoard(position)
+                Game.currentTurnTaker = player2
+            }
+            else if (currentPlayer === player2) {
+                player2.assignPositionToBoard(position)
+                Game.currentTurnTaker = player
+            }
+        break;
+        case true: return
         }
-        else if (currentPlayer === player2) {
-            player2.assignPositionToBoard(position)
-            Game.currentTurnTaker = player
-        }
+        
     }
 }
 
@@ -75,34 +83,56 @@ const GameBoard = {
     
     checkBoard: function (board, symbol) {
     if (board[0] === [symbol, symbol, symbol]){
-      console.log("winner!")
+        console.log("winner!")
+        
     }
     
-      if (board[0][0] === symbol &&
+    if (board[0][0] === symbol &&
         board[1][1] === symbol &&
         board[2][2] === symbol){
+        console.log("winner!")
+        endOfGame = true
+
+    }
+
+    if (board[0][2] === symbol &&
+        board[1][1] === symbol &&
+        board[2][0] === symbol){
       console.log("winner!")
+
     }
     
     if (board[0][0] === symbol &&
         board[1][0] === symbol &&
         board[2][0] === symbol){
       console.log("winner!")
+
     }
     
     if (board[0][2] === symbol &&
         board[1][2] === symbol &&
         board[2][2] === symbol){
       console.log("winner!")
+
     }
     
-    if (board[1] === [symbol, symbol, symbol]){
+    if (board[2][0] === symbol &&
+        board[2][1] === symbol &&
+        board[2][2] === symbol){
       console.log("winner!")
+
+    }
+    if (board[1][0] === symbol &&
+        board[1][1] === symbol &&
+        board[1][2] === symbol){
+      console.log("winner!")
+
     }
     else {
         console.log("uh oh")
     }
     },
+
     resetBoard: () => {
         GameBoard.board = [
         [null, null, null],
@@ -130,5 +160,6 @@ positionArr.forEach(num => {
     })
 });
 
+resetBtn = document.getElementById('resetBtn').addEventListener('click', GameBoard.resetBoard)
 
 
