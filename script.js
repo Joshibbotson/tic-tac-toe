@@ -1,3 +1,5 @@
+let endOfGame = false;
+
 const outcomeDisplay = document.getElementById('outcomeDisplay')
 
 const createPlayer = (name, symbol) => {
@@ -48,8 +50,17 @@ const createPlayer = (name, symbol) => {
     return {name, symbol, assignPositionToBoard}
 }
 const player2 = createPlayer('player2', 'o')
+const easyAI = createPlayer('easyAI', 'o')
+const cheaterAI = createPlayer('cheaterAI', 'o')
 const player = createPlayer('Josh', 'x')
-let endOfGame = false;
+
+easyAI.__proto__.makeLegalMove() = () => {
+    //so here I'm thinking I could take the current board array
+    //figure out how to ensure only null position are taken
+    //then pick a random number from the array of available positions and place a marker on the board.
+    
+}
+
 const Game = {
     currentTurnTaker: player,
     state: (currentPlayer) => {
@@ -150,6 +161,11 @@ const GameBoard = {
     
   }
 
+
+
+
+
+
 positionArr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 let position;
@@ -158,8 +174,6 @@ positionArr.forEach(num => {
      document.getElementById(num).addEventListener('click', (e) => {
         position = parseInt(e.target.id)
         Game.state(Game.currentTurnTaker)
-
-        // player.assignPositionToBoard(position) use this later
     })
 });
 
