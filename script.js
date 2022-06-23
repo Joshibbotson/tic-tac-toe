@@ -54,11 +54,28 @@ const easyAI = createPlayer('easyAI', 'o')
 const cheaterAI = createPlayer('cheaterAI', 'o')
 const player = createPlayer('Josh', 'x')
 
-easyAI.__proto__.makeLegalMove() = () => {
+easyAI.__proto__.makeLegalMove() = (arr) => {
     //so here I'm thinking I could take the current board array
     //figure out how to ensure only null position are taken
+        //note on this could parse through and note down the index of each null position nad push it into a new array
+        //from there choose random number from the array, and that is the position that will be taken!
+        // probably make use of a for each loop something like for each index if index === null, newArr.push(index) else return
     //then pick a random number from the array of available positions and place a marker on the board.
-    
+    function findNull (arr, i) {
+        let row = arr[i]
+        let rowArr = []
+        let nullLocation = row.indexOf(null)
+
+        while (nullLocation != -1) {
+            rowArr.push(nullLocation)
+            nullLocation = row.indexOf(null, nullLocation + 1)
+        }
+        return rowArr
+    }
+
+    let row1 = findNull(GameBoard.board, 0)
+    let row2 = findNull(GameBoard.board, 1)
+    let row3 = findNull(GameBoard.board, 2)
 }
 
 const Game = {
