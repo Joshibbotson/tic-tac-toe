@@ -49,19 +49,38 @@ const createPlayer = (name, symbol) => {
     }
     return {name, symbol, assignPositionToBoard}
 }
+
+
 const player2 = createPlayer('player2', 'o')
 const easyAI = createPlayer('easyAI', 'o')
 const cheaterAI = createPlayer('cheaterAI', 'o')
 const player = createPlayer('Josh', 'x')
+const Game = {
+    currentTurnTaker: player,
+    state: (currentPlayer) => {
+        switch(endOfGame){
+            case false:
+            if (currentPlayer === player) {
+                player.assignPositionToBoard(position)
+                Game.currentTurnTaker = easyAI
+            }
+            // if (currentPlayer === player2) {
+            //     player2.assignPositionToBoard(position)
+            //     Game.currentTurnTaker = player
+            // }
+            else if (currentPlayer === easyAI) {
+                easyAI.aiAssignPositionToBoard(easyAI.makeLegalMove(GameBoard.board), easyAI.symbol)
+                Game.currentTurnTaker = player
+            }
+        break;
+        case true: return
+        }
+        
+    }
+}
+easyAI.makeLegalMove = function (board) {
 
-easyAI.__proto__.makeLegalMove() = (arr) => {
-    //so here I'm thinking I could take the current board array
-    //figure out how to ensure only null position are taken
-        //note on this could parse through and note down the index of each null position nad push it into a new array
-        //from there choose random number from the array, and that is the position that will be taken!
-        // probably make use of a for each loop something like for each index if index === null, newArr.push(index) else return
-    //then pick a random number from the array of available positions and place a marker on the board.
-    function findNull (arr, i) {
+   function findNull (arr, i) {
         let row = arr[i]
         let rowArr = []
         let nullLocation = row.indexOf(null)
@@ -76,27 +95,85 @@ easyAI.__proto__.makeLegalMove() = (arr) => {
     let row1 = findNull(GameBoard.board, 0)
     let row2 = findNull(GameBoard.board, 1)
     let row3 = findNull(GameBoard.board, 2)
+
+    function getRandomPositionIndex(row) {
+        if (row.length === 0){
+              return
+        }
+        else {
+          return Math.floor(Math.random() * row.length)
+        }
+      }
+
+    let a = getRandomPositionIndex(row1)
+    let b = getRandomPositionIndex(row2)
+    let c = getRandomPositionIndex(row3)
+
+    function rowDecider (row1, row2, row3) {
+        if (typeof(row1) === 'number' ){
+          return `row1[${row1}]`
+
+        }
+        else if (typeof(row2) === 'number') {
+            return `row2[${row2}]`
+        }
+        else {
+            return `row3[${row3}]`
+        }
+      }
+      
+      return rowDecider(row1[a], row2[b], row3[c])
 }
 
-const Game = {
-    currentTurnTaker: player,
-    state: (currentPlayer) => {
-        switch(endOfGame){
-            case false:
-            if (currentPlayer === player) {
-                player.assignPositionToBoard(position)
-                Game.currentTurnTaker = player2
-            }
-            else if (currentPlayer === player2) {
-                player2.assignPositionToBoard(position)
-                Game.currentTurnTaker = player
-            }
+easyAI.aiAssignPositionToBoard = function (location, symbol) {
+    let row1 = GameBoard.board[0]
+    let row2 = GameBoard.board[1]
+    let row3 = GameBoard.board[2]
+    // let i = null
+    let domBoardPlacement;
+    switch(location) {
+        case location = 'row1[0]': domBoardPlacement = document.getElementById(1)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row1[0] = symbol
         break;
-        case true: return
-        }
-        
+        case location = 'row1[1]': domBoardPlacement = document.getElementById(2)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row1[1] = symbol
+        break;
+        case location = 'row1[2]': domBoardPlacement = document.getElementById(3)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row1[2] = symbol
+        break;
+        case location = 'row2[0]': domBoardPlacement = document.getElementById(4) 
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row2[0] = symbol
+        break;
+        case location = 'row2[1]': domBoardPlacement = document.getElementById(5) 
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row2[1] = symbol
+        break;
+        case location = 'row2[2]': domBoardPlacement = document.getElementById(6)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row2[2] = symbol
+        break;
+        case location = 'row3[0]': domBoardPlacement = document.getElementById(7)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row3[0] = symbol
+        break;
+        case location = 'row3[1]': domBoardPlacement = document.getElementById(8)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row3[1] = symbol
+        break;
+        case location = 'row3[2]': domBoardPlacement = document.getElementById(9)
+        domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
+        row3[2] = symbol
+        break;
+        default: console.log("AI not applicable.")
     }
+    GameBoard.checkBoard(GameBoard.board, 'x')
+    GameBoard.checkBoard(GameBoard.board, 'o')
 }
+
 
 const GameBoard = {
     board: 
