@@ -1,6 +1,7 @@
 let endOfGame = false;
 let pvp = false;
 let vsEasyAI = true;
+let log;
 
 const outcomeDisplay = document.getElementById('outcomeDisplay')
 
@@ -146,7 +147,6 @@ easyAI.makeLegalMove = function (board) {
           default: return;
         }
       }
-      
       return rowDecider(row1[a], row2[b], row3[c])
 }
 
@@ -161,39 +161,48 @@ easyAI.aiAssignPositionToBoard = function (location, symbol) {
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row1[0] = symbol
         break;
+
         case location = 'row1[1]': domBoardPlacement = document.getElementById(2)
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row1[1] = symbol
         break;
+
         case location = 'row1[2]': domBoardPlacement = document.getElementById(3)
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row1[2] = symbol
         break;
+
         case location = 'row2[0]': domBoardPlacement = document.getElementById(4) 
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row2[0] = symbol
         break;
+
         case location = 'row2[1]': domBoardPlacement = document.getElementById(5) 
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row2[1] = symbol
         break;
+
         case location = 'row2[2]': domBoardPlacement = document.getElementById(6)
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row2[2] = symbol
         break;
+
         case location = 'row3[0]': domBoardPlacement = document.getElementById(7)
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row3[0] = symbol
         break;
+
         case location = 'row3[1]': domBoardPlacement = document.getElementById(8)
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row3[1] = symbol
         break;
+
         case location = 'row3[2]': domBoardPlacement = document.getElementById(9)
         domBoardPlacement.innerHTML = `<p> ${symbol} </p>`
         row3[2] = symbol
         break;
-        default: console.log("AI not applicable.")
+
+        default: easyAI.aiAssignPositionToBoard(easyAI.makeLegalMove(GameBoard.board), easyAI.symbol)
     }
     GameBoard.checkBoard(GameBoard.board, 'x')
     GameBoard.checkBoard(GameBoard.board, 'o')
