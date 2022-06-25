@@ -12,7 +12,9 @@ const createPlayer = (name, symbol) => {
         let row3 = GameBoard.board[2]
         let currentPosition = document.getElementById(i)
         // i'm like 90% sure I can make this work with a for each loop and remove a buck ton of code...//
-        if (currentPosition.innerHTML === `<p> ${player.symbol} </p>`|| currentPosition.innerHTML === `<p> ${player2.symbol} </p>`){
+        if (currentPosition.innerHTML === `<p> ${player.symbol} </p>`|| 
+        currentPosition.innerHTML === `<p> ${player2.symbol} </p>` || 
+        currentPosition.innerHTML === `<p> ${easyAI.symbol} </p>`){
             return
         }
         else {
@@ -53,12 +55,10 @@ const createPlayer = (name, symbol) => {
     return {name, symbol, assignPositionToBoard}
 }
 
-
 const player2 = createPlayer('player2', 'o')
 const easyAI = createPlayer('easyAI', 'o')
 const cheaterAI = createPlayer('cheaterAI', 'o')
 const player = createPlayer('Josh', 'x')
-
 
 const Game = {
     currentTurnTaker: player,
@@ -272,12 +272,12 @@ const GameBoard = {
         endOfGame = true
         outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
-    if (board[0].includes(null) === false &&
+    else if (board[0].includes(null) === false &&
         board[1].includes(null) === false &&
-        board[2].includes(null) === false) {
-        console.log("tie")
+        board[2].includes(null) === false &&
+        endOfGame === false) {
+        outcomeDisplay.innerHTML = '<h2> Tie! </h2>'
     }
-    return
     },
 
     resetBoard: () => {
@@ -306,19 +306,45 @@ positionArr.forEach(num => {
      document.getElementById(num).addEventListener('click', (e) => {
         position = parseInt(e.target.id)
         Game.state(Game.currentTurnTaker)
+        btnChanger()
     })
 });
-
-resetBtn = document.getElementById('resetBtn').addEventListener('click', GameBoard.resetBoard)
-pvpBtn = document.getElementById('pvpBtn').addEventListener('click', () => {
+const DomBtns = {
+resetBtn: document.getElementById('resetBtn').addEventListener('click', GameBoard.resetBoard),
+pvpBtn: document.getElementById('pvpBtn').addEventListener('click', () => {
     GameBoard.resetBoard()
     pvp = true
     vsEasyAI = false
-})
-easyAiBtn = document.getElementById('easyAI').addEventListener('click', () => {
+    btnChanger()
+}),
+easyAiBtn: document.getElementById('easyAI').addEventListener('click', () => {
     GameBoard.resetBoard()
     pvp = false
     vsEasyAI = true
+    btnChanger()
 })
+}
 
-
+function btnChanger() {
+    personBtn = document.getElementById('pvpBtn')
+    aiBtn = document.getElementById('easyAI')
+    switch(pvp) {
+        case true: 
+            personBtn.style.color = "black"
+            personBtn.style.backgroundColor = "white"
+        break;
+        case false:
+            personBtn.style.color = "rgb(235, 235, 235)"
+            personBtn.style.backgroundColor = "rgb(255, 179, 0)"
+    }
+    switch(vsEasyAI){
+        case true:
+            aiBtn.style.color = "black"
+            aiBtn.style.backgroundColor = "white"
+        break;
+        case false:
+            aiBtn.style.color = "rgb(235, 235, 235)"
+            aiBtn.style.backgroundColor = "rgb(255, 179, 0)"
+    }
+    
+}

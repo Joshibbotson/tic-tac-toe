@@ -32,8 +32,8 @@ main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    outline: 3px solid white;
-    outline-offset: -3px;
+    outline: 5px solid white;
+    outline-offset: -4px;
     margin-bottom: 2rem;
 }
 
@@ -58,11 +58,16 @@ h1 {
     color: var(--title-colour);
 }
 
+.btn-container{
+    display: flex;
+    gap: 1rem;
+}
+
 button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20rem;
+    width: 15rem;
     flex-wrap: wrap;
     height: auto;
     font-size: 2em;
@@ -78,6 +83,10 @@ button {
 button:hover {
     filter: brightness(120%);
 }
+button:active {
+    color: black;
+    background-color: white;
+}
 
 @media (max-width: 836px) {
     body {
@@ -85,5 +94,10 @@ button:hover {
     }
     nav {
         margin-top:-8rem;
+    }
+    .btn-container{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
   }
