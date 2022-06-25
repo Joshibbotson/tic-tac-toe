@@ -124,15 +124,26 @@ easyAI.makeLegalMove = function (board) {
     let c = getRandomPositionIndex(row3)
 
     function rowDecider (row1, row2, row3) {
-        if (typeof(row1) === 'number' ){
-          return `row1[${row1}]`
-
-        }
-        else if (typeof(row2) === 'number') {
-            return `row2[${row2}]`
-        }
-        else {
+        let arr = [row1, row2, row3]
+        let answer = Math.floor(Math.random() * arr.length)
+        switch(answer) {
+          case 0: 
+            if (typeof(row1) === 'number' ){
+                return `row1[${row1}]`
+              break;
+          }
+          break;
+          case 1:
+            if (typeof(row2) === 'number') {
+              return `row2[${row2}]`
+            }
+          break;
+          case 2:
+            if (typeof(row3) === 'number'){
             return `row3[${row3}]`
+          }
+          break;
+          default: return;
         }
       }
       

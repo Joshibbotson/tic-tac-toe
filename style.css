@@ -59,8 +59,12 @@ h1 {
 }
 
 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 10rem;
-    height: 3rem;
+    flex-wrap: wrap;
+    height: auto;
     font-size: 2em;
     font-family: var(--font);
     font-weight: 600;
