@@ -1,4 +1,6 @@
 let endOfGame = false;
+let pvp = false;
+let vsEasyAI = true;
 
 const outcomeDisplay = document.getElementById('outcomeDisplay')
 
@@ -55,23 +57,35 @@ const player2 = createPlayer('player2', 'o')
 const easyAI = createPlayer('easyAI', 'o')
 const cheaterAI = createPlayer('cheaterAI', 'o')
 const player = createPlayer('Josh', 'x')
+
+
 const Game = {
     currentTurnTaker: player,
     state: (currentPlayer) => {
         switch(endOfGame){
             case false:
-            if (currentPlayer === player) {
-                player.assignPositionToBoard(position)
-                Game.currentTurnTaker = easyAI
-            }
-            // if (currentPlayer === player2) {
-            //     player2.assignPositionToBoard(position)
-            //     Game.currentTurnTaker = player
-            // }
-            else if (currentPlayer === easyAI) {
-                easyAI.aiAssignPositionToBoard(easyAI.makeLegalMove(GameBoard.board), easyAI.symbol)
-                Game.currentTurnTaker = player
-            }
+                switch(pvp){
+                    case true: 
+                        if (currentPlayer === player) {
+                            player.assignPositionToBoard(position)
+                            Game.currentTurnTaker = player2
+                        }
+                        else if (currentPlayer === player2) {
+                            player2.assignPositionToBoard(position)
+                            Game.currentTurnTaker = player
+                        }
+                }
+                switch(vsEasyAI) {
+                    case true:
+                        if (currentPlayer === player) {
+                            player.assignPositionToBoard(position)
+                            Game.currentTurnTaker = easyAI
+                        }
+                        else if (currentPlayer === easyAI) {
+                            easyAI.aiAssignPositionToBoard(easyAI.makeLegalMove(GameBoard.board), easyAI.symbol)
+                            Game.currentTurnTaker = player
+                        }
+                }
         break;
         case true: return
         }
@@ -182,6 +196,8 @@ const GameBoard = {
        [null, null, null]],
     
     checkBoard: function (board, symbol) {
+
+
     if (board[0][0] === symbol &&
         board[1][1] === symbol &&
         board[2][2] === symbol){
@@ -230,17 +246,24 @@ const GameBoard = {
         outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
 
-    else if (board[0][0] === symbol &&
+    if (board[0][0] === symbol &&
         board[0][1] === symbol &&
         board[0][2] === symbol){
         endOfGame = true
         outcomeDisplay.innerHTML = `<h2> ${Game.currentTurnTaker.symbol} wins! </h2>`
     }
+    if (board[0].includes(null) === false &&
+        board[1].includes(null) === false &&
+        board[2].includes(null) === false) {
+        console.log("tie")
+    }
+    return
     },
 
     resetBoard: () => {
         endOfGame = false;
         outcomeDisplay.innerHTML = ``
+        Game.currentTurnTaker = player
 
         GameBoard.board = [
         [null, null, null],
@@ -255,11 +278,6 @@ const GameBoard = {
     
   }
 
-
-
-
-
-
 positionArr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 let position;
@@ -272,5 +290,15 @@ positionArr.forEach(num => {
 });
 
 resetBtn = document.getElementById('resetBtn').addEventListener('click', GameBoard.resetBoard)
+pvpBtn = document.getElementById('pvpBtn').addEventListener('click', () => {
+    GameBoard.resetBoard()
+    pvp = true
+    vsEasyAI = false
+})
+easyAiBtn = document.getElementById('easyAI').addEventListener('click', () => {
+    GameBoard.resetBoard()
+    pvp = false
+    vsEasyAI = true
+})
 
 
